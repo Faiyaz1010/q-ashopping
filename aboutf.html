@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #013645;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .product-gallery {
+            position: relative;
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+        .image-slider {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 15px;
+        }
+
+        .slider-content {
+            max-width: 90%;
+            max-height: 90%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-images {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            margin: 20px 0;
+        }
+
+        .slider-images img {
+            scroll-snap-align: center;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .slider-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .zoomed {
+            transform: scale(1.5);
+            cursor: zoom-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background-color: #c40000;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Product Details</h1>
+    </header>
+
+    <div class="product-gallery">
+        <img src="photo1.jpg" alt="Product Image" class="product-image" id="main-image">
+        <div class="product-info">
+            <h3>Men's Leather Purse</h3>
+            <p>$25.00</p>
+            <p>Made with high-quality leather.</p>
+        </div>
+    </div>
+
+    <!-- Image Slider (Lightbox) -->
+    <div class="image-slider" id="slider">
+        <div class="slider-content">
+            <button class="close-btn" id="close-btn">X</button>
+            <div class="slider-images" id="slider-images">
+                <img src="photo1.jpg" alt="Image 1">
+                <img src="photo2.jpg" alt="Image 2">
+                <img src="photo3.jpg" alt="Image 3">
+                <img src="photo4.jpg" alt="Image 4">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the elements
+        const mainImage = document.getElementById("main-image");
+        const slider = document.getElementById("slider");
+        const sliderImages = document.getElementById("slider-images");
+        const closeButton = document.getElementById("close-btn");
+
+        // Open the lightbox when the main image is clicked
+        mainImage.addEventListener("click", function () {
+            slider.style.display = "flex"; // Show the slider
+        });
+
+        // Close the lightbox when the close button is clicked
+        closeButton.addEventListener("click", function () {
+            slider.style.display = "none"; // Hide the slider
+        });
+
+        // Add zoom functionality to the images in the slider
+        const images = sliderImages.querySelectorAll("img");
+        images.forEach(img => {
+            img.addEventListener("click", function () {
+                if (img.classList.contains("zoomed")) {
+                    img.classList.remove("zoomed");
+                } else {
+                    img.classList.add("zoomed");
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

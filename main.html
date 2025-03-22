@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App-like Homepage with Video</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Fullscreen layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+            overflow: hidden;
+        }
+
+        /* App container */
+        .app-container {
+            position: relative;
+            width: 100%;
+            max-width: 155px;
+            height: 100%;
+            max-height: 150px;
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Video styles */
+        .app-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 15px;
+        }
+
+        /* Hover effect */
+        .app-container video:hover {
+            transform: scale(1.05);
+        }
+
+        /* Button or label inside app container (optional) */
+        .app-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <a href="myecom.html">
+            <video autoplay muted loop>
+                <source src="Black Elegant Simple Animation Q Cedilla, Animated Logo.mp4" type="video/mp4">
+            </video>
+        </a>
+    </div>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A - Online Shopping</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+        }
+
+        header {
+            background: #013645;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Horizontal scrolling container */
+        #products {
+            display: flex;
+            overflow-x: scroll;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .product {
+            background: white;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .product-info {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .rating {
+            font-size: 12px;
+            color: #f39c12;
+        }
+
+        .price {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .buy-now {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin-top: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .buy-now:hover {
+            background: #218838;
+        }
+
+        footer {
+            background: #6a8394;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Offer Badge */
+        .offer-badge {
+            background-color: #ff4747;
+            color: white;
+            padding: 5px 10px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Q&A Shopping</h1>
+        <nav>
+            <ul>
+                <li><a href="if.html">Home</a></li>
+                <li><a href="fshop.html">Shop</a></li>
+                <li><a href="cartf.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="aboutf.html">About</a></li>
+                <li><a href="logf.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Products Section with Horizontal Scrolling -->
+    <!-- <section id="products">
+        <div class="product" data-category="purse" data-price="10">
+            <div class="offer-badge">10% OFF</div>
+            <div class="product-slider" id="product-slider-1">
+                <img src="photo1.jpg" alt="Purse Image 1" class="product-img" />
+                <img src="photo2.jpg" alt="Purse Image 2" class="product-img" />
+                <img src="photo3.jpg" alt="Purse Image 3" class="product-img" />
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Pure Cow Leather, Made in India</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$10</p>
+            </div>
+            <a href="buy.html" class="buy-now">Shop Now</a>
+        </div>
+
+        <div class="product" data-category="belt" data-price="25">
+            <div class="offer-badge">20% OFF</div>
+            <div class="product-slider" id="product-slider-2">
+                <img src="mens-clothes.jpg" alt="Belt Image 1" class="product-img" />
+                <img src="mens-clothes2.jpg" alt="Belt Image 2" class="product-img" />
+                <img src="mens-clothes3.jpg" alt="Belt Image 3" class="product-img" />
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> 100% Cotton, Comfortable Fit</p>
+                <div class="rating">⭐⭐⭐⭐☆☆</div>
+                <p class="price">$25</p>
+            </div>
+            <a href="buy.html" class="buy-now">Shop Now</a>
+        </div>
+
+        <div class="product" data-category="women-purse" data-price="30">
+            <div class="offer-badge">15% OFF</div>
+            <div class="product-slider" id="product-slider-3">
+                <img src="womens-clothes.jpg" alt="Women's Purse Image 1" class="product-img" />
+                <img src="womens-clothes2.jpg" alt="Women's Purse Image 2" class="product-img" />
+                <img src="womens-clothes3.jpg" alt="Women's Purse Image 3" class="product-img" />
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> 95% Polyester, Soft and Breathable</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$30</p>
+            </div>
+            <a href="buy.html" class="buy-now">Shop Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Q&A. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Function to change product images every 3 seconds
+        function startImageSlider(productId) {
+            var images = document.querySelectorAll(`#${productId} .product-img`);
+            var index = 0;
+
+            setInterval(function () {
+                images.forEach(function (img, i) {
+                    img.style.display = 'none'; // Hide all images
+                });
+                index = (index + 1) % images.length; // Move to the next image
+                images[index].style.display = 'block'; // Show the next image
+            }, 3000); // Change every 3 seconds
+        }
+
+        // Start image slider for all products
+        startImageSlider('product-slider-1');
+        startImageSlider('product-slider-2');
+        startImageSlider('product-slider-3');
+
+        // Function to open full-sized image
+        document.querySelectorAll('.product-img').forEach(function (img) {
+            img.addEventListener('click', function () {
+                var fullImage = document.createElement('img');
+                fullImage.src = this.src;
+                fullImage.style.width = '100%';
+                var fullImageWindow = window.open('', '', 'width=800,height=600');
+                fullImageWindow.document.body.appendChild(fullImage);
+            });
+        <!-- }); -->
+    </script>
+</body>
+</html> --> -->

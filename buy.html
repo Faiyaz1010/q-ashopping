@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A Checkout</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .checkout-container {
+            padding: 20px;
+            width: 50%;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .checkout-container h2 {
+            text-align: center;
+        }
+        .checkout-container label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        .checkout-container input,
+        .checkout-container select,
+        .checkout-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .payment-methods {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .payment-method {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .payment-method:hover {
+            background-color: #218838;
+        }
+        .qr-code {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .otp-input {
+            display: none;
+            margin-top: 10px;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Q&A Checkout</h1>
+    </header>
+
+    <div class="checkout-container">
+        <h2>Checkout for <span id="selected-product"></span></h2>
+
+        <!-- Address Form -->
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" name="first-name" required>
+
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="last-name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="district">Country:</label>
+        <input type="text" id="district" name="district" required>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+
+        <label for="district">District:</label>
+        <input type="text" id="district" name="district" required>
+
+        <label for="police-station">Police Station:</label>
+        <input type="text" id="police-station" name="police-station" required>
+
+        <label for="ward-number">Ward Number:</label>
+        <input type="text" id="ward-number" name="ward-number" required>
+
+        <label for="full-address">Full Address:</label>
+        <textarea id="full-address" name="full-address" rows="4" required></textarea>
+
+        <!-- Payment Methods -->
+        <label for="payment-method">Select Payment Method:</label>
+        <select id="payment-method" name="payment-method">
+            <option value="card">Card Payment</option>
+            <option value="upi">UPI Payment</option>
+        </select>
+
+        <!-- Card OTP Input -->
+        <div class="otp-input" id="otp-input">
+            <label for="otp">Enter OTP (6 digits):</label>
+            <input type="text" id="otp" name="otp" maxlength="6">
+        </div>
+
+        <div class="payment-methods">
+            <button class="payment-method" id="pay-now">Pay Now</button>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="qr-code" id="qr-code-section">
+            <h3>QR Code for UPI Payment</h3>
+            <img src="qr-code.png" alt="QR Code" width="150">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Q&A. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            // Get selected product from localStorage
+            var selectedProduct = localStorage.getItem("selectedProduct");
+            $("#selected-product").text(selectedProduct);
+
+            // Handle payment method selection
+            $("#payment-method").change(function() {
+                var paymentMethod = $(this).val();
+
+                if (paymentMethod === "card") {
+                    $("#otp-input").show();  // Show OTP input for card payment
+                    $("#qr-code-section").hide();  // Hide QR code for card payment
+                } else if (paymentMethod === "upi") {
+                    $("#otp-input").hide();  // Hide OTP input for UPI payment
+                    $("#qr-code-section").show();  // Show QR code for UPI payment
+                }
+            });
+
+            // Handle the "Pay Now" button click
+            $("#pay-now").click(function() {
+                var paymentMethod = $("#payment-method").val();
+
+                if (paymentMethod === "card") {
+                    var otp = $("#otp").val();
+                    if (otp.length === 6) {
+                        alert("OTP Verified! Payment successful.");
+                    } else {
+                        alert("Please enter a valid 6-digit OTP.");
+                    }
+                } else if (paymentMethod === "upi") {
+                    alert("Payment Confirmed via UPI.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A - Online Shopping</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+        }
+
+        header {
+            background: #013645;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #filters {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .filter {
+            margin-right: 20px;
+        }
+
+        .filter select,
+        .search-bar input {
+            padding: 8px;
+            font-size: 14px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            width: 200px;
+        }
+
+        #products {
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .product {
+            background: white;
+            padding: 10px;
+            margin: 6px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 180px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product img {
+            width: 100%;
+            height: 130px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .color-options {
+            display: flex;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .color-option {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 2px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+        }
+
+        .color-option:hover {
+            border: 2px solid #000;
+        }
+
+        .color-option.selected {
+            border: 2px solid #28a745;
+        }
+
+        .product-info {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .rating {
+            font-size: 12px;
+            color: #f39c12;
+        }
+
+        .price {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .buy-now {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin-top: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .buy-now:hover {
+            background: #218838;
+        }
+
+        footer {
+            background: #6a8394;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+
+        /* .......... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+        }
+
+        /* Black Border at the top */
+        .top-bar {
+            width: 100%;
+            height: 40px;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Styling for the slider container */
+        .slider {
+            margin-top: 40px; /* To make space for the top bar */
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slides {
+            display: flex;
+            width: 500%; /* 5 images * 100% */
+            animation: slide 15s infinite;
+        }
+
+        .slide {
+            width: 20%; /* 100% / 5 images */
+            height: 100vh; /* Make height same for all images */
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%; /* Set width to 100% */
+            height: 100%; /* Set height to 100% */
+            object-fit: cover; /* Maintain aspect ratio */
+        }
+
+        .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .shop-now {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background-color: #FF5733;
+            color: white;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .shop-now:hover {
+            background-color: #C70039;
+        }
+
+        /* Updated Animation for seamless slide transition starting from 1st image */
+        @keyframes slide {
+            0% { transform: translateX(-20%); } /* Start from the first image */
+            19.99% { transform: translateX(-20%); }
+            39.98% { transform: translateX(-40%); }
+            59.97% { transform: translateX(-60%); }
+            79.96% { transform: translateX(-80%); }
+            100% { transform: translateX(-80%); } /* End at the 5th image */
+        }
+
+        /* Styles for Image Gallery Below Slider */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            width: 30%; /* 3 items per row */
+            height: 300px; /* Fix height for all gallery items */
+            position: relative;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%; /* Set height to 100% */
+            object-fit: cover; /* Maintain aspect ratio */
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+        .gallery-item .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* WHO ARE WE Section */
+        .who-are-we {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 20px;
+            background-color: #f4f4f4;
+        }
+
+        .who-are-we .text-content {
+            width: 60%; /* Text takes up 60% */
+        }
+
+        .who-are-we .text-content h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .who-are-we .text-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .who-are-we .image-content {
+            width: 35%; /* Image takes up 35% */
+            height: 100%; /* Fix height for consistency */
+        }
+
+        .who-are-we .image-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* .............. */
+        
+        /* Main Content */
+        header {
+            background: #013645;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #6a8394;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Footer content */
+        .footer-container {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 12px;
+        }
+
+        .footer-container .footer-column {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .footer-container h3 {
+            color: #C70039;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .footer-container p {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .email-container input[type="email"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+        }
+
+        .email-container i {
+            color: #C70039;
+            margin-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-icons i {
+            font-size: 16px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .social-icons i:hover {
+            color: #C70039;
+        }
+
+        footer {
+            background:white;
+            color: rgb(14, 13, 13);
+            text-align: right;
+            padding: 20px 30px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer .social-icons {
+            margin-top: 10px;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        footer .email-input {
+            margin-top: 10px;
+        }
+
+        footer .email-input input {
+            padding: 5px;
+            font-size: 14px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        footer .about-us, footer .contact-info, footer .search-bar {
+            font-size: 12px;
+        }
+
+        .social-icons a:hover {
+            opacity: 0.7;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Q&A Shopping</h1>
+        <nav>
+            <ul>
+                <li><a href="if.html">Home</a></li>
+                <li><a href="fshop.html">Shop</a></li>
+                <li><a href="cartf.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="aboutf.html">About</a></li>
+                <li><a href="logf.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+<div class="slider">
+    <div class="slides">
+        <!-- Slide 1 -->
+        <div class="slide">
+            <img src="photo1.jpg" alt="Image 1">
+            <div class="text">Image 1 </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide">
+            <img src="photo2.jpg" alt="Image 2">
+            <div class="text">Image 2 </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide">
+            <img src="photo3.jpg" alt="Image 3">
+            <div class="text">Image 3</div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="slide">
+            <img src="photo4.jpg" alt="Image 4">
+            <div class="text">Image 4 </div>
+        </div>
+        <!-- Slide 5 with "Shop Now" button -->
+        <div class="slide">
+            <img src="photo5.jpg" alt="Image 5">
+            <div class="text">Image 5 </div>
+            <button class="shop-now" onclick="window.location.href='https://www.yourshop.com'">Shop Now</button>
+        </div>
+    </div>
+</div>
+
+<!-- Gallery Section Below Slider -->
+<div class="gallery">
+    <div class="gallery-item">
+        <a href="myecom.html">
+            <img src="photo6.jpg" alt="Image 6" style="cursor: pointer;">
+        </a>        
+        <div class="text">Click to Visit Page 1</div>
+    </div>
+    <div class="gallery-item">
+        <a href="myecom.html">
+            <img src="photo7.jpg" alt="Image 7" style="cursor: pointer;">
+        </a>
+        
+        <div class="text">Click to Visit Page 2</div>
+    </div>
+    <div class="gallery-item">
+        <a href="myecom.html">
+            <img src="photo8.jpg" alt="Image 8" style="cursor: pointer;">
+        </a>
+        
+        <div class="text">Click to Visit Page 3</div>
+    </div>
+    <div class="gallery-item">
+        <a href="daitails.html">
+            <img src="photo9.jpg" alt="Image 9" style="cursor: pointer;">
+        </a>
+        
+        <div class="text">Click to Visit Page 4</div>
+    </div>
+    <div class="gallery-item">
+        <a href="daitails.html">
+            <img src="photo10.jpg" alt="Image 10" style="cursor: pointer;">
+        </a>
+        
+        <div class="text">Click to Visit Page 5</div>
+    </div>
+    <div class="gallery-item">
+        <a href="https://www.example.com/page1">
+            <img src="photo1.jpg" alt="Image 1" style="cursor: pointer;">
+        </a>
+        
+        <div class="text">Click to Visit Page 6</div>
+    </div>
+</div>
+
+<!-- WHO ARE WE Section -->
+<div class="who-are-we">
+    <div class="text-content">
+        <h2>WHO ARE WE</h2>
+        <p>
+            We are a leading company in the leather industry, providing high-quality products with exceptional craftsmanship. 
+            Our team is dedicated to creating sustainable, durable, and stylish leather goods that cater to a wide range of customers.
+            We use the finest raw materials and follow strict production processes to ensure that every product meets the highest standards.
+            Whether you're looking for luxury leather accessories or functional leather apparel, we have something to suit your needs.
+        </p>
+    </div>
+    <div class="image-content">
+        <img src="man.jpg" alt="Leather Product">
+    </div>
+</div>
+<div style="background-color: white; text-align: center; padding: 20px;">
+    <h1 style="color: #3c4a4b;">FEATURED</h1>
+</div>
+
+
+
+    <section id="products">
+        <div class="product" data-category="mens-purse">
+            <a href="if.html">
+                <img id="product-img1" src="photo1.jpg" alt="Makhana">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: white;" onclick="changeImage('photo1.jpg', 'product-img1')"></div>
+                <div class="color-option" style="background-color: green;" onclick="changeImage('photo1-green.jpg', 'product-img1')"></div>
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('photo1-brown.jpg', 'product-img1')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Pure Cow Leather, Made in India</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$10</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="womens-purse">
+            <a href="product-details.html?product=2">
+                <img id="product-img2" src="phpto1.jpg" alt="Women's Purse">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: red;" onclick="changeImage('womens-purse-red.jpg', 'product-img2')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('womens-purse-black.jpg', 'product-img2')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Leather, Elegant Design</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$25</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto6.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="phpto2.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto13.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="phpto16.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto10.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="phpto9.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto16.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="phpto7.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto8.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="phpto13.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto9.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="phpto1.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto3.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="jackets.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto8.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="phpto19.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto10.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="jackets.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="phpto13.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="photo16.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="about-us">
+            <p>About Us</p>
+        </div>
+        
+        <!-- Moved Search below About Us -->
+        <div class="search-bar">
+            <p>Search</p>
+            <input type="text" placeholder="Search">
+        </div>
+        
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: contact@qa.com</p>
+        </div>
+        
+        <div class="email-input">
+            <input type="email" placeholder="Enter your email">
+        </div>
+        
+        <div class="social-icons">
+            <!-- Using Font Awesome icons for social media -->
+            <a href="https://www.whatsapp.com" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+    </footer>
+    
+
+    <script>
+        let messageIndex = 0;
+
+        function updateShoppingText() {
+            document.getElementById('shopping-text').textContent = shoppingMessages[messageIndex];
+        }
+
+        let slideIndex = 0;
+
+        setInterval(() => {
+            slideIndex = (slideIndex + 1) % shoppingMessages.length;
+            updateShoppingText();
+        }, 3000);
+
+        window.addEventListener('scroll', function () {
+            const topBar = document.getElementById('top-bar');
+            const slider = document.querySelector('.slider');
+            let currentScroll = window.scrollY;
+
+            if (currentScroll > lastScrollTop) {
+                topBar.style.top = '-40px';
+                slider.style.marginTop = '0';
+            } else {
+                topBar.style.top = '0';
+                slider.style.marginTop = '40px';
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+
+        function changeImage(imageSrc, imgId) {
+            document.getElementById(imgId).src = imageSrc;
+        }
+
+        function filterProducts() {
+            const category = document.getElementById('category').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const productCategory = product.dataset.category.toLowerCase();
+                if (!category || productCategory === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+          // Social media links - Replace with actual sharing URLs
+          document.querySelectorAll('.social-icons i').forEach(icon => {
+            icon.addEventListener('click', () => {
+                if (icon.classList.contains('fa-whatsapp')) {
+                    window.open('https://wa.me/?text=Check%20out%20this%20amazing%20website!');
+                } else if (icon.classList.contains('fa-facebook-f')) {
+                    window.open('https://www.facebook.com/sharer/sharer.php?u=http://example.com');
+                } else if (icon.classList.contains('fa-instagram')) {
+                    alert('Instagram sharing is not supported directly via web links.');
+                }
+            });
+        });
+    </script>
+</script>
+</body>
+</html>

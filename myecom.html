@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A - Online Shopping</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+        }
+
+        header {
+            background: #013645;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #filters {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .filter {
+            margin-right: 20px;
+        }
+
+        .filter select,
+        .search-bar input {
+            padding: 8px;
+            font-size: 14px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            width: 200px;
+        }
+
+        #products {
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .product {
+            background: white;
+            padding: 10px;
+            margin: 6px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 180px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product img {
+            width: 100%;
+            height: 130px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .color-options {
+            display: flex;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .color-option {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 2px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+        }
+
+        .color-option:hover {
+            border: 2px solid #000;
+        }
+
+        .color-option.selected {
+            border: 2px solid #28a745;
+        }
+
+        .product-info {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .rating {
+            font-size: 12px;
+            color: #f39c12;
+        }
+
+        .price {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .buy-now {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin-top: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .buy-now:hover {
+            background: #218838;
+        }
+
+        footer {
+            background: #6a8394;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+
+        /* .......... */
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Q&A Shopping</h1>
+        <nav>
+            <ul>
+                <li><a href="if.html">Home</a></li>
+                <li><a href="fshop.html">Shop</a></li>
+                <li><a href="cartf.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="aboutf.html">About</a></li>
+                <li><a href="logf.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="filters">
+        <div class="filter">
+            <label for="category">Category:</label>
+            <select id="category" onchange="filterProducts()">
+                <option value="">All</option>
+                <option value="mens-purse">Men's Purse</option>
+                <option value="womens-purse">Women's Purse</option>
+                <option value="belts">Belts</option>
+                <option value="jackets">Jackets</option>
+            </select>
+        </div>
+
+        <div class="search-bar">
+            <!-- Search input field -->
+            <input type="text" id="search-input" placeholder="Search Products...">
+        
+            <!-- Search button (clickable icon) -->
+            <button style="height: 35px; width: 35px;" id="search-icon">🔍</button>
+        </div>
+    </section>
+
+    <section id="products">
+        <div class="product" data-category="mens-purse">
+            <a href="if.html">
+                <img id="product-img1" src="photo1.jpg" alt="Makhana">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: white;" onclick="changeImage('photo1.jpg', 'product-img1')"></div>
+                <div class="color-option" style="background-color: green;" onclick="changeImage('photo1-green.jpg', 'product-img1')"></div>
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('photo1-brown.jpg', 'product-img1')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Pure Cow Leather, Made in India</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$10</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="womens-purse">
+            <a href="product-details.html?product=2">
+                <img id="product-img2" src="womens-purse.jpg" alt="Women's Purse">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: red;" onclick="changeImage('womens-purse-red.jpg', 'product-img2')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('womens-purse-black.jpg', 'product-img2')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Leather, Elegant Design</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$25</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="belts">
+            <a href="product-details.html?product=3">
+                <img id="product-img3" src="belts.jpg" alt="Belts">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: brown;" onclick="changeImage('belts-brown.jpg', 'product-img3')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('belts-black.jpg', 'product-img3')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Genuine Leather</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="price">$15</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+
+        <div class="product" data-category="jackets">
+            <a href="product-details.html?product=4">
+                <img id="product-img4" src="jackets.jpg" alt="Jackets">
+            </a>
+            <div class="color-options">
+                <div class="color-option" style="background-color: navy;" onclick="changeImage('jackets-navy.jpg', 'product-img4')"></div>
+                <div class="color-option" style="background-color: black;" onclick="changeImage('jackets-black.jpg', 'product-img4')"></div>
+            </div>
+            <div class="product-info">
+                <p><strong>Specifications:</strong> Warm and Stylish</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="price">$50</p>
+            </div>
+            <a href="buy.html" class="buy-now">Buy Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Q&A. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function changeImage(imageSrc, imgId) {
+            document.getElementById(imgId).src = imageSrc;
+        }
+
+        function filterProducts() {
+            var category = document.getElementById('category').value;
+            var products = document.querySelectorAll('.product');
+            products.forEach(function (product) {
+                if (category === '' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+          // Function to search products
+    function searchProducts() {
+        var input = document.getElementById('search-input').value.toLowerCase(); // Get search input value
+        var products = document.querySelectorAll('.product'); // Select all product elements
+
+        // If the input is empty, show all products
+        if (input === "") {
+            products.forEach(function (product) {
+                product.style.display = 'block';
+            });
+            return;
+        }
+
+        // If the input has a value, perform the search
+        products.forEach(function (product) {
+            var title = product.querySelector('.product-info p').textContent.toLowerCase(); // Get product title
+            // If product title matches search input, show the product, otherwise hide it
+            if (title.indexOf(input) !== -1) {
+                product.style.display = 'block';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+    }
+
+    // Add event listener to search button
+    document.getElementById('search-icon').addEventListener('click', function() {
+        searchProducts(); // Trigger the search function when the button is clicked
+    });
+
+    // Optional: Trigger search when user types in the input field
+    document.getElementById('search-input').addEventListener('input', function() {
+        searchProducts(); // Call the search function when the input value changes
+    });
+</script>
+    </script>
+</body>
+
+</html>

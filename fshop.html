@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A - Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        #products {
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .product {
+            background: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+        }
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+        .product button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            border: none;
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .product button:hover {
+            background: #218838;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Q&A Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="if.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="cartf.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="aboutf.html">About</a></li>
+                <li><a href="logf.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="products">
+        <div class="product">
+            <p>$10</p>
+            <div class="slider-container">
+                <div class="slider" id="makhana-slider">
+                    <img src="photo1.jpg" alt="Makhana Color 1">
+                    <img src="photo2.jpg" alt="Makhana Color 2">
+                    <img src="photo3.jpg" alt="Makhana Color 3">
+                </div>
+                <div class="slider-nav prev" id="prev-makhana">&lt;</div>
+                <div class="slider-nav next" id="next-makhana">&gt;</div>
+            </div>
+            <a href="buy.html"><button class="shop-now" data-product="Makhana">Shop Now</button></a>
+        </div>
+
+        <div class="product">
+            <h3>Men's Clothes</h3>
+            <p>$25</p>
+            <div class="slider-container">
+                <div class="slider" id="mens-clothes-slider">
+                    <img src="mens-clothes-red.jpg" alt="Red">
+                    <img src="mens-clothes-blue.jpg" alt="Blue">
+                    <img src="mens-clothes-black.jpg" alt="Black">
+                </div>
+                <div class="slider-nav prev" id="prev-mens-clothes">&lt;</div>
+                <div class="slider-nav next" id="next-mens-clothes">&gt;</div>
+            </div>
+            <button class="shop-now" data-product="Men's Clothes">Shop Now</button>
+        </div>
+
+        <div class="product">
+            <h3>Women's Clothes</h3>
+            <p>$30</p>
+            <div class="slider-container">
+                <div class="slider" id="womens-clothes-slider">
+                    <img src="womens-clothes-pink.jpg" alt="Pink">
+                    <img src="womens-clothes-blue.jpg" alt="Blue">
+                    <img src="womens-clothes-yellow.jpg" alt="Yellow">
+                </div>
+                <div class="slider-nav prev" id="prev-womens-clothes">&lt;</div>
+                <div class="slider-nav next" id="next-womens-clothes">&gt;</div>
+            </div>
+            <button class="shop-now" data-product="Women's Clothes">Shop Now</button>
+        </div>
+
+        <div class="product">
+            <div class="slider-container">
+                <div class="slider" id="slippers-slider">
+                    <img src="photo1.jpg" alt="Red">
+                    <img src="photo2.jpg" alt="Blue">
+                    <img src="photo3.jpg" alt="Green">
+                </div>
+                <div class="slider-nav prev" id="prev-slippers">&lt;</div>
+                <div class="slider-nav next" id="next-slippers">&gt;</div>
+            </div>
+            <p>$15</p>
+            <button class="shop-now" data-product="Slippers">Shop Now</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Q&A. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            // Function to move slider to the next image
+            function moveSlider(sliderId, direction) {
+                var slider = $(sliderId);
+                var currentTranslateX = parseInt(slider.css('transform').split(',')[4]) || 0;
+                var imageWidth = $(slider).find('img').width();
+                var newTranslateX = currentTranslateX + (direction * imageWidth);
+                slider.css('transform', 'translateX(' + newTranslateX + 'px)');
+            }
+
+            // Attach event listeners for prev and next buttons
+            $('#prev-makhana').click(function() {
+                moveSlider('#makhana-slider', 1);  // Move to next image (right)
+            });
+            $('#next-makhana').click(function() {
+                moveSlider('#makhana-slider', -1);  // Move to previous image (left)
+            });
+
+            $('#prev-mens-clothes').click(function() {
+                moveSlider('#mens-clothes-slider', 1);
+            });
+            $('#next-mens-clothes').click(function() {
+                moveSlider('#mens-clothes-slider', -1);
+            });
+
+            $('#prev-womens-clothes').click(function() {
+                moveSlider('#womens-clothes-slider', 1);
+            });
+            $('#next-womens-clothes').click(function() {
+                moveSlider('#womens-clothes-slider', -1);
+            });
+
+            $('#prev-slippers').click(function() {
+                moveSlider('#slippers-slider', 1);
+            });
+            $('#next-slippers').click(function() {
+                moveSlider('#slippers-slider', -1);
+            });
+
+            $(".shop-now").click(function() {
+                var product = $(this).data("product");
+                localStorage.setItem("selectedProduct", product);  // Store selected product in localStorage
+                window.location.href = "checkout.html";  // Redirect to checkout page
+            });
+        });
+    </script>
+</body>
+</html>

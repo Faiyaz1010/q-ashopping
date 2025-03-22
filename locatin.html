@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Japanese Practice App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .level-select {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+
+    #feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .book-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .level-content {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Japanese Language Practice (N1 to N5)</h1>
+
+    <div class="level-select">
+      <button id="n5-btn">N5</button>
+      <button id="n4-btn">N4</button>
+      <button id="n3-btn">N3</button>
+      <button id="n2-btn">N2</button>
+      <button id="n1-btn">N1</button>
+    </div>
+
+    <div class="book-container">
+      <div id="n5-content" class="level-content">
+        <h2>N5 Practice</h2>
+        <div class="practice-section">
+          <div id="n5-word"></div>
+          <textarea id="n5-answer" placeholder="Type your answer here"></textarea>
+          <button id="n5-check-answer">Check Answer</button>
+          <div id="n5-feedback"></div>
+          <button id="n5-speak-btn">Listen</button>
+        </div>
+      </div>
+
+      <div id="n4-content" class="level-content">
+        <h2>N4 Practice</h2>
+        <div class="practice-section">
+          <div id="n4-word"></div>
+          <textarea id="n4-answer" placeholder="Type your answer here"></textarea>
+          <button id="n4-check-answer">Check Answer</button>
+          <div id="n4-feedback"></div>
+          <button id="n4-speak-btn">Listen</button>
+        </div>
+      </div>
+
+      <div id="n3-content" class="level-content">
+        <h2>N3 Practice</h2>
+        <div class="practice-section">
+          <div id="n3-word"></div>
+          <textarea id="n3-answer" placeholder="Type your answer here"></textarea>
+          <button id="n3-check-answer">Check Answer</button>
+          <div id="n3-feedback"></div>
+          <button id="n3-speak-btn">Listen</button>
+        </div>
+      </div>
+
+      <div id="n2-content" class="level-content">
+        <h2>N2 Practice</h2>
+        <div class="practice-section">
+          <div id="n2-word"></div>
+          <textarea id="n2-answer" placeholder="Type your answer here"></textarea>
+          <button id="n2-check-answer">Check Answer</button>
+          <div id="n2-feedback"></div>
+          <button id="n2-speak-btn">Listen</button>
+        </div>
+      </div>
+
+      <div id="n1-content" class="level-content">
+        <h2>N1 Practice</h2>
+        <div class="practice-section">
+          <div id="n1-word"></div>
+          <textarea id="n1-answer" placeholder="Type your answer here"></textarea>
+          <button id="n1-check-answer">Check Answer</button>
+          <div id="n1-feedback"></div>
+          <button id="n1-speak-btn">Listen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Word lists with Hindi to Japanese translations for each level
+    const n5Words = [
+      { word: "नमस्ते", answer: "こんにちは" }, // Hello
+      { word: "धन्यवाद", answer: "ありがとう" }, // Thank you
+      { word: "अलविदा", answer: "さようなら" } // Goodbye
+    ];
+
+    const n4Words = [
+      { word: "अध्याय", answer: "勉強" }, // Study
+      { word: "यात्रा", answer: "旅行" }, // Travel
+      { word: "खरीदारी", answer: "買い物" } // Shopping
+    ];
+
+    const n3Words = [
+      { word: "आत्मविश्वास", answer: "自信" }, // Confidence
+      { word: "चिंता", answer: "不安" }, // Anxiety
+      { word: "आभार", answer: "感謝" }  // Gratitude
+    ];
+
+    const n2Words = [
+      { word: "समाज", answer: "社会" }, // Society
+      { word: "अनुभव", answer: "経験" }, // Experience
+      { word: "भविष्य", answer: "未来" } // Future
+    ];
+
+    const n1Words = [
+      { word: "शिक्षा", answer: "学問" }, // Academics
+      { word: "विचार", answer: "思想" }, // Thought
+      { word: "सिद्धांत", answer: "理論" }  // Theory
+    ];
+
+    // Function to start practice for a selected level
+    function startPractice(level) {
+      let wordsList, levelContent;
+      if (level === 'n5') {
+        wordsList = n5Words;
+        levelContent = '#n5-content';
+      }
+      if (level === 'n4') {
+        wordsList = n4Words;
+        levelContent = '#n4-content';
+      }
+      if (level === 'n3') {
+        wordsList = n3Words;
+        levelContent = '#n3-content';
+      }
+      if (level === 'n2') {
+        wordsList = n2Words;
+        levelContent = '#n2-content';
+      }
+      if (level === 'n1') {
+        wordsList = n1Words;
+        levelContent = '#n1-content';
+      }
+
+      // Show the selected level content
+      $('.level-content').hide();
+      $(levelContent).show();
+
+      const randomWord = wordsList[Math.floor(Math.random() * wordsList.length)];
+      $(levelContent + ' #word').text(randomWord.word);
+      $(levelContent + ' #user-answer').val('');
+      $(levelContent + ' #feedback').text('');
+
+      // Check the user's answer
+      $(levelContent + ' #check-answer').click(function() {
+        const userAnswer = $(levelContent + ' #user-answer').val().trim();
+        if (userAnswer === randomWord.answer) {
+          $(levelContent + ' #feedback').text("Correct!").css("color", "green");
+        } else {
+          $(levelContent + ' #feedback').text("Incorrect, try again.").css("color", "red");
+        }
+      });
+
+      // Text to Speech
+      $(levelContent + ' #speak-btn').click(function() {
+        let speech = new SpeechSynthesisUtterance(randomWord.answer);
+        window.speechSynthesis.speak(speech);
+      });
+    }
+
+    // Set button click events for each level
+    $('#n5-btn').click(function() {
+      startPractice('n5');
+    });
+
+    $('#n4-btn').click(function() {
+      startPractice('n4');
+    });
+
+    $('#n3-btn').click(function() {
+      startPractice('n3');
+    });
+
+    $('#n2-btn').click(function() {
+      startPractice('n2');
+    });
+
+    $('#n1-btn').click(function() {
+      startPractice('n1');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Cow Leather Purse</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #8b5e3c;
+        }
+
+        .product-info {
+            display: flex;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image img {
+            width: 250px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-details {
+            margin-left: 30px;
+        }
+
+        .product-details h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #8b5e3c;
+        }
+
+        .product-details ul {
+            list-style-type: none;
+            margin-bottom: 20px;
+        }
+
+        .product-details ul li {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        button {
+            background-color: #8b5e3c;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #6a3e2d;
+        }
+
+        .description {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #8b5e3c;
+            color: #fff;
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Luxury Cow Leather Purse</h1>
+        </header>
+        <section class="product-info">
+            <div class="product-image">
+                <img src="photo4.jpg" alt="Cow Leather Purse">
+            </div>
+            <div class="product-details">
+                <h2>Product Details</h2>
+                <ul>
+                    <li><strong>Material:</strong> 100% Cow Leather</li>
+                    <li><strong>Color:</strong> Classic Brown</li>
+                    <li><strong>Dimensions:</strong> 12 inches (Length) x 9 inches (Height) x 4 inches (Width)</li>
+                    <li><strong>Features:</strong> Multiple compartments, Premium stitching, Adjustable strap</li>
+                    <li><strong>Weight:</strong> 500g</li>
+                    <li><strong>Price:</strong> $120</li>
+                    <li><strong>Warranty:</strong> 1-year Manufacturer Warranty</li>
+                    <li><strong>Manufactured In:</strong> India</li>
+                </ul>
+                <button id="add-to-cart" onclick="addToCart()">Add to Cart</button>
+            </div>
+        </section>
+        <section class="description">
+            <h3>Why Choose This Purse?</h3>
+            <p>This luxurious cow leather purse is designed for those who value style, functionality, and quality. With premium stitching, a spacious interior, and a durable adjustable strap, it is the perfect accessory for daily use. Made from genuine cow leather, it gets better with age, developing a unique patina over time.</p>
+            <p>Each purse is handcrafted by skilled artisans in India, ensuring attention to detail and exceptional craftsmanship. The leather used is ethically sourced and treated to maintain its natural texture and durability.</p>
+        </section>
+        <footer>
+            <p>&copy; 2025 Luxury Bags Inc. | All Rights Reserved</p>
+        </footer>
+    </div>
+    <script>
+        function addToCart() {
+            alert("The item has been added to your cart!");
+        }
+    </script>
+</body>
+</html>
